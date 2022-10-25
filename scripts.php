@@ -20,7 +20,23 @@
 
     function saveTask()
     {
+
+        $mysql = connection();
         //CODE HERE
+        $title = $_POST['task-title'];
+        $type = $_POST['task-type'];
+        $priority = $_POST['priorities-option'];
+        $status = $_POST['status-options'];
+        $date = $_POST['date'];
+        $description = $_POST['description'];
+
+        $sql = "INSERT INTO tasks (`title`, `type_id`, `priority_id`, `status_id`, `task_datetime`, `description`) VALUES ('$title','$type','$priority','$status','$date','$description')";
+        $result = $mysql->query($sql);
+
+        if($result == true){
+            echo("data added to your database");
+        }
+
         //SQL INSERT
         $_SESSION['message'] = "Task has been added successfully !";
 		header('location: index.php');
