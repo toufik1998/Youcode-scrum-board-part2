@@ -4,16 +4,16 @@
     
 
     function connection(){
-        $conn = new mysqli("localhost", "root", "", "Youcodescumboard");
+        $link = mysqli_connect("localhost", "root", "", "Youcodescumboard");
 
-        if($conn->connect_error){
-            die("Connection Failed" . $conn->connect_error);
+        if($link === false){
+            die("ERROR: Could not connect. " . mysqli_connect_error());
         }
 
-        return $conn;
-    }
-   
+        // Print host information
+        echo "Connect Successfully. Host info: " . mysqli_get_host_info($link);
 
-    // echo("connected seccuoiljqk");
-    
+        return $link;
+    }
+       
 ?>

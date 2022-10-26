@@ -15,6 +15,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	<link href="assets/css/vendor.min.css" rel="stylesheet" />
 	<link href="assets/css/default/app.min.css" rel="stylesheet" />
+	<link href="style.css" rel="stylesheet" />
 	<!-- ================== END core-css ================== -->
 </head>
 <body>
@@ -263,11 +264,12 @@
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-danger" data-toggle="panel-remove"><i class="fa fa-times"></i></a>
 							</div>
 						</div>
-						<div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0" id="to-do-tasks">
+						<div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0 tasks" id="to-do-tasks">
 							<!-- TO DO TASKS HERE -->
 							<?php
 								//PHP CODE HERE
 								//DATA FROM getTasks() FUNCTION
+								getTasks(1);
 							?>
 						</div>
 					</div>
@@ -288,6 +290,7 @@
 							<?php
 								//PHP CODE HERE
 								//DATA FROM getTasks() FUNCTION
+								getTasks(2);
 							?>
 						</div>
 					</div>
@@ -308,6 +311,7 @@
 							<?php
 								//PHP CODE HERE
 								//DATA FROM getTasks() FUNCTION
+								getTasks(3);
 							?>
 						</div>
 					</div>
