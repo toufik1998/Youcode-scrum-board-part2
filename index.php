@@ -15,7 +15,6 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	<link href="assets/css/vendor.min.css" rel="stylesheet" />
 	<link href="assets/css/default/app.min.css" rel="stylesheet" />
-	<link href="style.css" rel="stylesheet" />
 	<!-- ================== END core-css ================== -->
 </head>
 <body>
@@ -363,11 +362,11 @@
 								<label class="form-label">Type</label>
 								<div class="ms-3">
 									<div class="form-check mb-1">
-										<input class="form-check-input" name="task-type" type="radio" value="1" id="task-type-feature"/>
+										<input class="form-check-input" name="task-type" type="radio" value="1" id="task-type-1"/>
 										<label class="form-check-label" for="task-type-feature">Feature</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" name="task-type" type="radio" value="2" id="task-type-bug"/>
+										<input class="form-check-input" name="task-type" type="radio" value="2" id="task-type-2"/>
 										<label class="form-check-label" for="task-type-bug">Bug</label>
 									</div>
 								</div>
@@ -435,11 +434,11 @@
 								<label class="form-label">Type</label>
 								<div class="ms-3">
 									<div class="form-check mb-1">
-										<input class="form-check-input" name="task-type" type="radio" value="1" id="task-type-feature"/>
+										<input class="form-check-input" name="task-type" type="radio" value="1" id="task-type-1"/>
 										<label class="form-check-label" for="task-type-feature">Feature</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" name="task-type" type="radio" value="2" id="task-type-bug"/>
+										<input class="form-check-input" name="task-type" type="radio" value="2" id="task-type-2"/>
 										<label class="form-check-label" for="task-type-bug">Bug</label>
 									</div>
 								</div>
@@ -493,10 +492,6 @@
 
 	<script>
 		//reloadTasks();
-		function deleteTask(id){
-			document.querySelector("#task-id").value = id;
-			console.log(id);
-		}
 	</script>
 </body>
 </html>
