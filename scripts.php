@@ -13,13 +13,20 @@
     if(isset($_POST['openTask']))    getSpecificTask($_POST['openTask']);
 
     
-    function getTasks($stat)
-    { 
+function getTasks($stat){ 
         //CODE HERE
         //SQL SELECT
         // Attempt select query execution
         $conn = connection();
         $sql = "SELECT * FROM tasks JOIN types  ON tasks.type_id=types.idt JOIN priorities ON tasks.priority_id=priorities.idp WHERE status_id='$stat'";
+        
+        $icon = 'far fa-question-circle';
+        if($stat == 2){
+            $icon = 'fas fa-circle-notch fa-spin';
+        }else if($stat == 3){
+            $icon = 'far fa-circle-check';
+        }
+        
         if($result = mysqli_query($conn, $sql)){
             if($stat == 1){
                 $_SESSION['todo'] = mysqli_num_rows($result);
@@ -31,35 +38,27 @@
             }
             if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_array($result)){
-                    echo "<button class='border-white border-0 mt-2' onclick='searchTask(".$row['id'].")' data-bs-toggle='modal' data-bs-target='#modal-task'>";
-                        // if($stat == 1){
-                        //     echo "<i class='fa-solid fa-trash text-danger' id='delete'></i>";
-                        // }else{
-                        //     echo "<i class='fa-solid fa-pen' data-bs-toggle='modal' data-bs-target='#edit-modal-task'></i>";
-                        // }
-
-                        echo "<div class='text-start' >";
-                            echo "<div class='title-one'>" . $row['title'] . "</div>";
-                            echo "<div class=''>";
-                                echo "<div class='creation'><span id='order-card-todo'></span>" . $row['task_datetime'] . "</div>";
-                                echo "<div class='having my-1'>" . $row['description'] . "</div>";
-                            echo "</div>";
-                            echo "<div class='buttons my-1 d-flex justify-content-between align-items-center'>";
-                                echo "<span class='btn text-white bg-primary'>" . $row['namet'] . "</span>";
-                                echo "<span class='btn  bg-light border-info'>" . $row['namep'] . "</span>";
-                            echo "</div>";
-
-                        echo "</div>";
-                    echo "</button>";  
                     
+                    echo '
+                    <button onclick="editTask('.$row['id'].')" class="list-group-item list-group-item-action d-flex" data-bs-toggle="modal" data-bs-target="#modal-task">
+                        <div class="me-3 fs-16px">
+                            <i class=" '.$icon.' text-green fa-fw"></i> 
+                        </div>
+                        <div class="flex-fill w-75">
+                            <div class="fs-14px lh-12 mb-2px fw-bold text-dark text-truncate">'.$row['title'].'</div>
+                            <div class="mb-1 fs-12px">
+                                <div class="text-gray-600 flex-1">#'.$row['id'].' created in '.$row['task_datetime'].'</div>
+                                <div class="text-gray-900 flex-1 text-truncate" title="'.$row['description'].'">'.$row['description'].'</div>
+                            </div>
+                            <div class="mb-1">
+                                <span class="badge bg-primary">'.$row['namet'].'</span>
+                                <span class="badge bg-gray-300 text-gray-900">'.$row['namep'].'</span>
+                            </div>
+                        </div>
+                    </button> ';
                     
-                    // $_SESSION['progresse']++;$_SESSION['todo']++;
-                    // $_SESSION['done']++;
                     
                 }
-                // Return the number of rows in result set
-                $rowcount=mysqli_num_rows($result);
-                printf("Result set has %d rows.\n",$rowcount);
                 
                 // Free result set
                 mysqli_free_result($result);
@@ -74,41 +73,39 @@
         mysqli_close($conn);
 
 
-        // echo "Fetch all tasks";
 }
 
-function getSpecificTask($id)
-    {
-        header('Content-Type: application/json');
-        $aResult = [];
-        // CODE HERE
-        // SQL SELECT
-        $link = connection();
 
-        $sql = "SELECT * FROM tasks where id = $id";
-        if($result = mysqli_query($link, $sql)){
-            if(mysqli_num_rows($result) > 0){
-                while($row = mysqli_fetch_array($result)){
-                    $aResult[0] = $row['title'];
-                    $aResult[1] = $row['type_id'];
-                    $aResult[2] = $row['priority_id'];
-                    $aResult[3] = $row['status_id'];
-                    $aResult[4] = $row['task_datetime'];
-                    $aResult[5] = $row['description'];
-                }
-                // Free result set
-                mysqli_free_result($result);
+function getSpecificTask($id){
+    header('Content-Type: application/json');
+    $aResult = [];
+    // CODE HERE
+    // SQL SELECT
+    $link = connection();
+
+    $sql = "SELECT * FROM tasks where id = $id";
+    if($result = mysqli_query($link, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            while($row = mysqli_fetch_array($result)){
+                $aResult[0] = $row['title'];
+                $aResult[1] = $row['type_id'];
+                $aResult[2] = $row['priority_id'];
+                $aResult[3] = $row['status_id'];
+                $aResult[4] = $row['task_datetime'];
+                $aResult[5] = $row['description'];
             }
+            // Free result set
+            mysqli_free_result($result);
         }
-
-        // Close connection
-        mysqli_close($link);
-        echo json_encode($aResult);
     }
 
+    // Close connection
+    mysqli_close($link);
+    echo json_encode($aResult);
+}
 
-    function saveTask()
-    {
+
+function saveTask(){
 
         $conn = connection();
         //CODE HERE
@@ -139,8 +136,8 @@ function getSpecificTask($id)
 		header('location: index.php');
 }
 
-    function updateTask()
-    {
+
+function updateTask(){
         //CODE HERE
         //SQL UPDATE
         $conn = connection();
@@ -153,7 +150,7 @@ function getSpecificTask($id)
         $date = $_POST['date'];
         $description = $_POST['description'];
 
-        $sql = "UPDATE tasks  SET `title`='$title', `type_id`='$type', `priority_id`='$priority', `status_id`='$status', `task_datetime`='$date', `description`='$description' WHERE id = $update_id";
+        $sql = "UPDATE tasks  SET `title`='$title', `type_id`='$type', `priority_id`='$priority', `status_id`='$status', `task_datetime`='$date', `description`='$description' WHERE id = '$update_id'";
 
         if(mysqli_query($conn, $sql)){
             echo "Records inserted successfully.";
@@ -168,8 +165,8 @@ function getSpecificTask($id)
 		header('location: index.php');
 }
 
-    function deleteTask()
-    {
+
+function deleteTask(){
         //CODE HERE
         //SQL DELETE
         $conn = connection();
