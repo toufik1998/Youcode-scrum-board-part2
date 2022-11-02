@@ -28,14 +28,14 @@ function getTasks($stat){
         }
         
         if($result = mysqli_query($conn, $sql)){
-            if($stat == 1){
-                $_SESSION['todo'] = mysqli_num_rows($result);
+            // if($stat == 1){
+            //     $_SESSION['todo'] = mysqli_num_rows($result);
 
-            }else if($stat == 2){
-                $_SESSION['progresse']  = mysqli_num_rows($result);
-            }else{
-                $_SESSION['done'] = mysqli_num_rows($result);
-            }
+            // }else if($stat == 2){
+            //     $_SESSION['progresse']  = mysqli_num_rows($result);
+            // }else{
+            //     $_SESSION['done'] = mysqli_num_rows($result);
+            // }
             if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_array($result)){
                     
@@ -63,7 +63,7 @@ function getTasks($stat){
                 // Free result set
                 mysqli_free_result($result);
             } else{
-                echo "No records matching your query were found.";
+                echo "Your todo tasks is Empty.";
             }
         } else{
             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
@@ -185,6 +185,21 @@ function deleteTask(){
 		header('location: index.php');
 }
 
+
+function getCountTasks($stat)
+{
+    //CODE HERE
+    //SQL UPDATE
+    $conn = connection();
+
+    $sql = "SELECT * FROM tasks WHERE status_id='$stat'";
+    $result = mysqli_query($conn, $sql);
+    $count = mysqli_num_rows($result);
+    echo $count;
+     
+    // Close connection
+    mysqli_close($conn);
+}
 
 
 ?>
